@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/* class Welcome extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.luckText = props.luckText;
+const isNumberPositive = (props, propName, componentName) => {
+  let error;
+  if (typeof props[propName] !== `number`) {
+    error = new Error(`Значение свойства ${propName} в компоненте ${componentName} должно быть числом`);
   }
-}*/
+  if (props[propName] < 1) {
+    error = new Error(`Значение свойства ${propName} в компоненте ${componentName} должно быть больше нуля`);
+  }
+  return error;
+};
 
 const Welcome = (props) => {
   const {luckText = `Удачи!`, playTime = 7, mistakes = 4} = props;
@@ -34,16 +37,5 @@ Welcome.propTypes = {
   playTime: isNumberPositive,
   mistakes: isNumberPositive
 };
-
-function isNumberPositive(props, propName, componentName) {
-  let error;
-  if (typeof props[propName] !== `number`) {
-    error = new Error(`Значение свойства ${propName} в компоненте ${componentName} должно быть числом`);
-  }
-  if (props[propName] < 1) {
-    error = new Error(`Значение свойства ${propName} в компоненте ${componentName} должно быть больше нуля`);
-  }
-  return error;
-}
 
 export default Welcome;
