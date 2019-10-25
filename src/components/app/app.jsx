@@ -18,11 +18,13 @@ const isNumberPositive = (props, propName, componentName) => {
 
 const App = (props) => {
   const {luckText = `Удачи!`, playTime = 7, mistakes = 4} = props;
+  const onBtnClick = () => `Hello`;
 
   return <Welcome
     luckText={luckText}
     playTime={playTime}
     mistakes={mistakes}
+    onBtnClick={onBtnClick}
   />;
 };
 

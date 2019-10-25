@@ -1,23 +1,23 @@
 import React from 'react';
-import Enzyme, {mount} from 'enzyme';
+import Enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import App from './app.jsx';
+import Welcome from './welcome.jsx';
 
 Enzyme.configure({adapter: new Adapter()});
 
-describe(`App`, () => {
+describe(`Welcome`, () => {
   it(`it's clickable!`, () => {
     const clickStart = jest.fn();
-    const app = mount(<App
+    const app = shallow(<Welcome
       luckText="Погнали"
       playTime={1}
       mistakes={1}
-      onClick={clickStart}
+      onBtnClick={clickStart}
     />);
 
     const btn = app.find(`.welcome__button`);
 
-    btn.simulate(`click`, {clickStart() {}});
+    btn.simulate(`click`);
     expect(clickStart).toHaveBeenCalledTimes(1);
   });
 });

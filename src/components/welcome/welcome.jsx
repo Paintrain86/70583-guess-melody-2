@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Welcome = (props) => {
-  const {luckText, playTime, mistakes} = props;
+  const {luckText, playTime, mistakes, onBtnClick = () => {}} = props;
 
   return <section className="welcome">
     <div className="welcome__logo">
       <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" />
     </div>
-    <button className="welcome__button">
+    <button className="welcome__button" onClick={onBtnClick}>
       <span className="visually-hidden">Начать игру</span>
     </button>
     <h2 className="welcome__rules-title">Правила игры</h2>
@@ -24,7 +24,8 @@ const Welcome = (props) => {
 Welcome.propTypes = {
   luckText: PropTypes.string.isRequired,
   playTime: PropTypes.number.isRequired,
-  mistakes: PropTypes.number.isRequired
+  mistakes: PropTypes.number.isRequired,
+  onBtnClick: PropTypes.func
 };
 
 export default Welcome;
