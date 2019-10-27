@@ -5,7 +5,9 @@ import App from "./components/app/app.jsx";
 
 const init = () => {
   ReactDOM.render(
-      <App />,
+      <App
+        luckText="Братан, мы верим в тебя!"
+      />,
       document.querySelector(`#root`)
   );
 };
