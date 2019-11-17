@@ -12,7 +12,7 @@ describe(`Welcome`, () => {
       luckText="Погнали"
       playTime={1}
       mistakes={1}
-      onBtnClick={clickStart}
+      onStartBtnClick={clickStart}
     />);
 
     const btn = app.find(`.welcome__button`);
