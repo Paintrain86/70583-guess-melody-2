@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import Welcome from "../welcome/";
-import GuessGenre from "../guess-genre/";
-import GuessArtist from "../guess-artist/";
+import Welcome from "../welcome/welcome.jsx";
+import GuessGenre from "../guess-genre/guess-genre.jsx";
+import GuessArtist from "../guess-artist/guess-artist.jsx";
 
 const isNumberPositive = (props, propName, componentName) => {
   let error;
@@ -25,7 +25,7 @@ class App extends React.PureComponent {
         playTime,
         mistakes,
         luckText
-      } = props;
+      } = props.settings;
 
       return <Welcome
         luckText={luckText}
@@ -35,7 +35,7 @@ class App extends React.PureComponent {
       />;
     }
 
-    const {questions} = props;
+    const {questions} = props.settings;
     const curQuestion = questions[questionIdx];
 
     switch (curQuestion.type) {
@@ -45,7 +45,7 @@ class App extends React.PureComponent {
       />;
 
       case `artist`: return <GuessArtist
-        queston={curQuestion}
+        question={curQuestion}
         onAnswer={onUserAnswer}
       />;
     }
@@ -57,35 +57,34 @@ class App extends React.PureComponent {
     super(props);
 
     this.state = {
-      question: -1
+      questionIndex: -1
     };
   }
 
   render() {
     const {
-      playTime,
-      mistakes,
-      luckText,
       questions
-    } = this.props;
+    } = this.props.settings;
 
     const {questionIndex} = this.state;
 
     return App.getScreen(questionIndex, this.props, () => {
-      this.setState((prevState) => {
+      this.setState((prevState) => ({
         prevState,
-        question: prevState.question + 1
-      });
+        questionIndex: (prevState.questionIndex === questions.length - 1) ? -1 : prevState.questionIndex + 1
+      }));
     });
   }
 
-};
+}
 
 App.propTypes = {
-  luckText: PropTypes.string,
-  playTime: isNumberPositive,
-  mistakes: isNumberPositive,
-  questions: PropTypes.array
+  settings: PropTypes.shape({
+    luckText: PropTypes.string,
+    playTime: isNumberPositive,
+    mistakes: isNumberPositive,
+    questions: PropTypes.array
+  })
 };
 
 export default App;
