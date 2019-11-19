@@ -4,12 +4,40 @@ import PropTypes from 'prop-types';
 class GuessGenre extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = {
+      checkboxes: props.question.answers.map((it, index) => ({
+        id: index,
+        genre: it.genre,
+        isSelected: false
+      }))
+    };
+
+    this.changeHandler = this.changeHandler.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
+  }
+
+  changeHandler(index) {
+    this.setState((prevState) => {
+      const checkboxes = prevState.checkboxes.map((it, i) => {
+        return {
+          id: i,
+          genre: it.genre,
+          isSelected: (i === index) ? !it.isSelected : it.isSelected
+        };
+      });
+
+      return {
+        checkboxes
+      };
+    });
   }
 
   submitHandler(evt) {
     evt.preventDefault();
-    const inputs = document.querySelectorAll(`.game__tracks .game__input:checked`);
-    const answers = (inputs.length === 0) ? [] : [].map.call(inputs, (input) => input.value);
+    const answers = this.state.checkboxes
+      .filter((it) => it.isSelected)
+      .map((it) => it.genre);
 
     return (answers.length === 0) ? this.showErrorMessage() : this.props.onAnswer(answers);
   }
@@ -26,7 +54,7 @@ class GuessGenre extends React.PureComponent {
     const {answers} = question;
 
     return (
-      <React.Fragment>
+      <>
         <section className="game game--genre">
           <header className="game__header">
             <a className="game__back" href="#">
@@ -52,8 +80,8 @@ class GuessGenre extends React.PureComponent {
           </header>
 
           <section className="game__screen">
-            <h2 className="game__title">Выберите треки в стиле {question.genre.toUpperCase()}</h2>
-            <form className="game__tracks" onSubmit={this.submitHandler.bind(this)}>
+            <h2 className="game__title">Выберите треки в стиле &laquo;{question.genre.toUpperCase()}&raquo;</h2>
+            <form className="game__tracks" onSubmit={this.submitHandler}>
               {answers.map((it, i) => {
                 return (
                   <div className="track" key={`answer-${i}`}>
@@ -62,7 +90,12 @@ class GuessGenre extends React.PureComponent {
                       <audio></audio>
                     </div>
                     <div className="game__answer">
-                      <input className="game__input visually-hidden" type="checkbox" name="answer" value={it.genre} id={`answer-${i}`} />
+                      <input className="game__input visually-hidden" type="checkbox" name="answer"
+                        value={it.genre}
+                        id={`answer-${i}`}
+                        checked={it.isSelected}
+                        onChange={() => this.changeHandler(i)}
+                      />
                       <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
                     </div>
                   </div>
@@ -73,7 +106,7 @@ class GuessGenre extends React.PureComponent {
             </form>
           </section>
         </section>
-      </React.Fragment>
+      </>
     );
   }
 }

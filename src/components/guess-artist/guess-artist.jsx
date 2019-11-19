@@ -4,14 +4,25 @@ import PropTypes from 'prop-types';
 class GuessArtist extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = {
+      artist: ``
+    };
+
+    this.changeHandler = this.changeHandler.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
+  }
+
+  changeHandler(evt) {
+    this.setState({
+      artist: evt.target.value
+    });
   }
 
   submitHandler(evt) {
     evt.preventDefault();
-    const input = document.querySelector(`.game__artist-form .artist__input:checked`);
-    const answer = (input) ? input.value : ``;
 
-    return (answer === ``) ? this.showErrorMessage() : this.props.onAnswer(answer);
+    return (this.state.artist === ``) ? this.showErrorMessage() : this.props.onAnswer(this.state.artist);
   }
 
   showErrorMessage() {
@@ -26,7 +37,7 @@ class GuessArtist extends React.PureComponent {
     const {answers} = question;
 
     return (
-      <React.Fragment>
+      <>
         <section className="game game--artist">
           <header className="game__header">
             <a className="game__back" href="#">
@@ -62,12 +73,17 @@ class GuessArtist extends React.PureComponent {
               </div>
             </div>
 
-            <form className="game__artist-form" onSubmit={this.submitHandler.bind(this)}>
+            <form className="game__artist-form" onSubmit={this.submitHandler}>
               <div className="game__artist">
                 {answers.map((it, i) => {
                   return (
                     <div className="artist" key={`answer-${i}`}>
-                      <input className="artist__input visually-hidden" type="radio" name="answer" value={it.artist} id={`answer-${i}`} />
+                      <input className="artist__input visually-hidden" type="radio" name="answer"
+                        value={it.artist}
+                        id={`answer-${i}`}
+                        checked={this.state.artist === it.artist}
+                        onChange={this.changeHandler}
+                      />
                       <label className="artist__name" htmlFor={`answer-${i}`}>
                         <img className="artist__picture" src={it.picture} alt={it.artist} />
                         {it.artist}
@@ -81,7 +97,7 @@ class GuessArtist extends React.PureComponent {
             </form>
           </section>
         </section>
-      </React.Fragment>
+      </>
     );
   }
 }
