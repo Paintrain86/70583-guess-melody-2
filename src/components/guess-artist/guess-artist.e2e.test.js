@@ -31,9 +31,13 @@ describe(`GuessArtist`, () => {
     const testAnswer = `testArtist`;
     const artist = shallow(<GuessArtist {...testProps} />);
     const form = artist.find(`.game__artist-form`);
-    const answer = artist.find(`[value="${testAnswer}"]`);
+    const answerRadio = artist.find(`[value="${testAnswer}"]`);
 
-    answer.simulate(`click`);
+    answerRadio.simulate(`change`, {
+      target: {
+        value: testAnswer
+      }
+    });
     form.simulate(`submit`, {
       preventDefault: () => {}
     });

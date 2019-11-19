@@ -81,8 +81,9 @@ exports[`GuessGenre component is rendered correctly 1`] = `
     <h2
       className="game__title"
     >
-      Выберите треки в стиле 
+      Выберите треки в стиле «
       POP
+      »
     </h2>
     <form
       className="game__tracks"
@@ -107,6 +108,7 @@ exports[`GuessGenre component is rendered correctly 1`] = `
             className="game__input visually-hidden"
             id="answer-0"
             name="answer"
+            onChange={[Function]}
             type="checkbox"
             value="rock"
           />
@@ -137,6 +139,7 @@ exports[`GuessGenre component is rendered correctly 1`] = `
             className="game__input visually-hidden"
             id="answer-1"
             name="answer"
+            onChange={[Function]}
             type="checkbox"
             value="pop"
           />

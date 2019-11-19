@@ -111,9 +111,11 @@ exports[`GuessArtist component is rendered correctly 1`] = `
           className="artist"
         >
           <input
+            checked={false}
             className="artist__input visually-hidden"
             id="answer-0"
             name="answer"
+            onChange={[Function]}
             type="radio"
             value="testArtist"
           />
@@ -133,9 +135,11 @@ exports[`GuessArtist component is rendered correctly 1`] = `
           className="artist"
         >
           <input
+            checked={false}
             className="artist__input visually-hidden"
             id="answer-1"
             name="answer"
+            onChange={[Function]}
             type="radio"
             value="testArtist2"
           />
