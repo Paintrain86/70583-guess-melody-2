@@ -31,10 +31,9 @@ class GuessArtist extends React.PureComponent {
 
   render() {
     const {
-      question
+      question: {answers}
     } = this.props;
 
-    const {answers} = question;
 
     return (
       <>

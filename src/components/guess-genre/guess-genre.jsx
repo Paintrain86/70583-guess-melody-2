@@ -18,19 +18,15 @@ class GuessGenre extends React.PureComponent {
   }
 
   changeHandler(index) {
-    this.setState((prevState) => {
-      const checkboxes = prevState.checkboxes.map((it, i) => {
+    this.setState((prevState) => ({
+      checkboxes: prevState.checkboxes.map((it, i) => {
         return {
           id: i,
           genre: it.genre,
           isSelected: (i === index) ? !it.isSelected : it.isSelected
         };
-      });
-
-      return {
-        checkboxes
-      };
-    });
+      })
+    }));
   }
 
   submitHandler(evt) {
@@ -48,10 +44,9 @@ class GuessGenre extends React.PureComponent {
 
   render() {
     const {
-      question
+      question,
+      question: {answers}
     } = this.props;
-
-    const {answers} = question;
 
     return (
       <>

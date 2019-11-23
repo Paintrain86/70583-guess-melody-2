@@ -19,6 +19,18 @@ const isNumberPositive = (props, propName, componentName) => {
 };
 
 class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.questions = props.settings.questions;
+
+    this.state = {
+      questionIndex: -1
+    };
+
+    this.handleUserAnswer = this.handleUserAnswer.bind(this);
+  }
+
   static getScreen(questionIdx, props, onUserAnswer) {
     if (questionIdx === -1) {
       const {
@@ -53,27 +65,17 @@ class App extends React.PureComponent {
     return null;
   }
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      questionIndex: -1
-    };
+  handleUserAnswer() {
+    this.setState((prevState) => ({
+      prevState,
+      questionIndex: (prevState.questionIndex === this.questions.length - 1) ? -1 : prevState.questionIndex + 1
+    }));
   }
 
   render() {
-    const {
-      questions
-    } = this.props.settings;
-
     const {questionIndex} = this.state;
 
-    return App.getScreen(questionIndex, this.props, () => {
-      this.setState((prevState) => ({
-        prevState,
-        questionIndex: (prevState.questionIndex === questions.length - 1) ? -1 : prevState.questionIndex + 1
-      }));
-    });
+    return App.getScreen(questionIndex, this.props, this.handleUserAnswer);
   }
 
 }

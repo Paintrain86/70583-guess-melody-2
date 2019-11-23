@@ -7,7 +7,7 @@ module.exports = {
     path: path.join(__dirname, `public`)
   },
   resolve: {
-    extensions: [`.js`, `.jsx`]
+    extensions: [`.js`]
   },
   devServer: {
     contentBase: path.join(__dirname, `public`),
